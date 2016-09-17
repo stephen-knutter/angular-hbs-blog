@@ -1,0 +1,17 @@
+{
+  "name": "angular-hbs-blog",
+  "description": "personal blog",
+  "main": "",
+  "authors": [
+    "Stephen Knutter <stephen.knutter@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

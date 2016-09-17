@@ -1,0 +1,143 @@
+body {
+  margin: 0;
+  font: 14px Georgia,"Times New Roman",Times,serif;
+  color: #26313D;
+}
+
+footer{
+  margin: 10px 0;
+}
+
+a, a:active {
+  color: #76BD1C;
+}
+
+a:visited, a:active{
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #D9E021;
+  cursor: pointer;
+}
+
+a.active {
+  background-color: #f1f1f1;
+  border-radius: 3px;
+  border: 1px solid #DBDBDB;
+  padding: 3px;
+}
+
+.underline{
+  text-decoration: underline;
+}
+
+.content-wrapper {
+  margin: 20px 0 0 0;
+  padding: 0;
+}
+
+.big-head {
+  font-size: 4em;
+  background: url('/images/abstract.png') 0 0 no-repeat;
+  padding-left: 80px;
+}
+
+.head-menu {
+  margin: 0;
+  padding: 0 0 20px 0;
+  border-bottom: 3px solid #DBDBDB;
+}
+
+.side-head, .blog-head {
+  margin: 0;
+  padding-bottom: 5px;
+  border-bottom: 4px solid #E6E6E6;
+}
+
+.blog-head{
+  border: 0;
+  margin-bottom: 5px;
+}
+
+.article-descrip, .side-descrip, .article-tags {
+  font: 14px/1.5em Georgia, "Times New Roman", Times, serif;
+}
+
+.side-descrip {
+  padding: 10px 0;
+}
+
+.article-tags {
+  font-size: .8em;
+  color: #76BD1C;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.tag {
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+
+.img-thumbnail {
+  float: left;
+  width: 150px;
+  height: 150px;
+  margin-right: 10px;
+}
+
+.login-wrap {
+  margin: 10px auto;
+  padding: 0;
+  width: 320px;
+}
+
+.login-control {
+  display: inline-block;
+  border-radius: 0;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 3px solid #DBDBDB;
+}
+
+.login-control:after{
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  width: 0;
+  background: transparent;
+  transition: width: .5s ease, background-color .5s ease;
+}
+
+.login-control:hover:after{
+  width: 100%;
+  background: #76BD1C;
+}
+
+.form-wrap{
+  margin: 5px 0;
+}
+
+.login-link, .login-link:hover, .login-link:active{
+  color: #666;
+}
+
+.login-link:hover{
+  text-decoration: underline;
+}
+
+.article-wrapper{
+  padding-top: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #E6E6E6;
+}
+
+.article-wrapper:nth-child(1){
+  padding-top: 0;
+}

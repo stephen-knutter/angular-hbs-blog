@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="blog">
+  <head>
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/bower_components/highlight-js/src/styles/atom-one-dark.css" />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+    <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="/bower_components/showdown/dist/showdown.min.js"></script>
+    <script type="text/javascript" src="/bower_components/ng-showdown/dist/ng-showdown.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="/bower_components/highlight-js/src/highlight.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-highlightjs/src/angular-highlightjs.js"></script>
+    <script type="text/javascript" src="/javascripts/app.js"></script>
+
+    <title ng-bind="$state.current.data.pageTitle"></title>
+  </head>
+  <body>
+    <div class="container">
+      <ng-include src="'templates/header.hbs'"></ng-include>
+
+      <!-- {{{body}}} -->
+      <ui-view></ui-view>
+
+      <ng-include src="'templates/footer.hbs'"></ng-include>
+    </div>
+  </body>
+
+  <script>hljs.initHighlightingOnLoad();</script>
+</html>

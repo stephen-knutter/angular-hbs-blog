@@ -1,0 +1,7 @@
+<footer class="row" ng-controller="footCtrl">
+  <hr/>
+  <a href="/login" class="login-link" ng-hide="isLoggedIn()">Login<a>
+  <a class="login-link" ng-show="isLoggedIn()" ng-click="logOut()">Logout<a>
+  <span> | </span>
+  <a href="/dashboard" class="login-link" ng-show="isLoggedIn()">Dashboard</a>
+</footer>
