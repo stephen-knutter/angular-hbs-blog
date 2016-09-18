@@ -2,7 +2,7 @@
 <html ng-app="blog">
   <head>
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/bower_components/highlight-js/src/styles/atom-one-dark.css" />
+    <link rel="stylesheet" href="/bower_components/angular-ui-select/dist/select.min.css" />
     <link rel='stylesheet' href='/stylesheets/style.css' />
 
     <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
@@ -10,11 +10,20 @@
     <script type="text/javascript" src="/bower_components/showdown/dist/showdown.min.js"></script>
     <script type="text/javascript" src="/bower_components/ng-showdown/dist/ng-showdown.min.js"></script>
     <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script type="text/javascript" src="/bower_components/highlight-js/src/highlight.js"></script>
-    <script type="text/javascript" src="/bower_components/angular-highlightjs/src/angular-highlightjs.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-ui-select/dist/select.min.js"></script>
     <script type="text/javascript" src="/javascripts/app.js"></script>
 
     <title ng-bind="$state.current.data.pageTitle"></title>
+
+    <!--[if lt IE 9]>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.2.0/es5-shim.js"></script>
+      <script>
+        document.createElement('ui-select');
+        document.createElement('ui-select-match');
+        document.createElement('ui-select-choices');
+      </script>
+    <![endif]-->
   </head>
   <body>
     <div class="container">
@@ -26,6 +35,4 @@
       <ng-include src="'templates/footer.hbs'"></ng-include>
     </div>
   </body>
-
-  <script>hljs.initHighlightingOnLoad();</script>
 </html>

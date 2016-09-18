@@ -1,4 +1,8 @@
-var app = angular.module('blog', ['ng-showdown', 'ui.router']);
+var app = angular.module('blog',
+  ['ng-showdown',
+  'ui.router',
+  'ui.select',
+  'ngSanitize']);
 
 app.run(['$rootScope', '$state', '$stateParams',
   function($rootScope, $state, $stateParams) {
@@ -37,7 +41,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
         controller: 'articleCtrl',
         templateUrl: './templates/dashboard.hbs',
         data: {
-          pageTitle: 'Dashboard | Stephe Knutter',
+          pageTitle: 'Dashboard | Stephen Knutter',
           navSelect: false
         },
         onEnter: ['$state', 'auth', function($state, auth) {
@@ -45,6 +49,15 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
             $state.go('home');
           }
         }]
+      })
+      .state('archive', {
+        url: '/archive',
+        controller: 'blogCtrl',
+        templateUrl: './templates/archive.hbs',
+        data: {
+          pageTitle: 'Archive | Stephen Knutter',
+          navSelect: 'archive'
+        }
       });
 
     $urlRouterProvider.otherwise('home');
@@ -60,12 +73,28 @@ app.controller('footCtrl', ['$scope', 'auth', function($scope, auth) {
   $scope.logOut = auth.logOut;
 }]);
 
-app.controller('blogCtrl', ['$scope', '$http', '$sce',
-  function($scope, $http, $sce) {
-    $http.get('/articles').success(function(data) {
-      $scope.articles = data;
+app.controller('blogCtrl', ['$scope', '$http', 'article', 'auth',
+  function($scope, $http, article, auth) {
+    article.getAllArticles(function(data) {
+      $scope.articles = data.rows;
     });
+
+    $scope.formatTime = function(time) {
+      return new Date(time).toDateString();
+    };
+
+    $scope.isLoggedIn = auth.isLoggedIn;
+
+    $scope.removeArticle = function(id) {
+      if (confirm('Are you sure?')) {
+        //DELETE COMMENT HERE
+      }
+    };
   }]);
+
+app.controller('archiveCtrl', ['$scope', function($scope) {
+  $scope.msg = 'HI';
+}]);
 
 app.controller('logCtrl', ['$scope', '$state', 'auth',
   function($scope, $state, auth) {
@@ -84,12 +113,18 @@ app.controller('articleCtrl', ['$scope', '$state', 'article',
   function($scope, $state, article) {
     $scope.article = {};
 
+    $scope.itemArray = [];
+    article.getArticleTagsList(function(data) {
+      $scope.itemArray = data;
+    });
+
     $scope.addArticle = function() {
       if (!$scope.article.title || !$scope.article.body) return false;
 
       article.create({
         title: $scope.article.title,
-        body: $scope.article.body
+        body: $scope.article.body,
+        tags: $scope.article.tags
       });
     };
   }]);
@@ -98,11 +133,23 @@ app.factory('article', ['$http', '$state', 'auth',
   function($http, $state, auth) {
     var article = {};
 
+    article.getAllArticles = function(cb) {
+      $http.get('/articles').success(function(data) {
+        cb(data);
+      });
+    };
+
     article.create = function(newArticle) {
       $http.post('/articles', newArticle, {
         headers: {Authorization: 'Bearer ' + auth.getToken()}
       }).success(function(data) {
         $state.go('home');
+      });
+    };
+
+    article.getArticleTagsList = function(cb) {
+      $http.get('/articles/tags').success(function(data) {
+        cb(data);
       });
     };
 

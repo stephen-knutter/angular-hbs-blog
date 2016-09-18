@@ -7,6 +7,16 @@
     <div class="form-group">
       <textarea class="form-control" name="name" rows="8" cols="40" placeholder="Add markup..." ng-model="article.body"></textarea>
     </div>
+    <div class="form-group">
+      <ui-select multiple ng-model="article.tags">
+        <ui-select-match placeholder="Select tags...">
+            <span ng-bind="$item.tag"></span>
+        </ui-select-match>
+        <ui-select-choices repeat="item in (itemArray | filter: $select.search) track by item.id">
+            <span ng-bind="item.tag"></span>
+        </ui-select-choices>
+      </ui-select>
+    </div>
     <input type="submit" class="btn btn-success" name="submit" value="Add Article" />
   </div>
 </form>

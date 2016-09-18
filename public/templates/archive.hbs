@@ -1,0 +1,6 @@
+<h3>Archive</h3>
+<div class="container-fluid content-wrapper">
+  <div ng-repeat="article in articles">
+    <h5><span ng-click="removeArticle(article.id)" ng-show="isLoggedIn()" class="glyphicon glyphicon-remove" aria-hidden="true"></span> <a href="#">{{article.title}}</a> <span class="archive-time">: {{formatTime(article.created_at)}}</span></h5>
+  </div>
+</div>

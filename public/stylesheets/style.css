@@ -79,6 +79,15 @@ a.active {
 .tag {
   text-decoration: underline;
   text-transform: uppercase;
+  margin: 0 2px;
+}
+
+.glyphicon-tag, .glyphicon-remove {
+  color: #d3d3d3;
+}
+
+.glyphicon-remove:hover{
+  cursor: pointer;
 }
 
 .img-thumbnail {
@@ -103,7 +112,7 @@ a.active {
   border-bottom: 3px solid #DBDBDB;
 }
 
-.login-control:after{
+.login-control:after {
   content: '';
   display: block;
   position: absolute;
@@ -115,16 +124,16 @@ a.active {
   transition: width: .5s ease, background-color .5s ease;
 }
 
-.login-control:hover:after{
+.login-control:hover:after {
   width: 100%;
   background: #76BD1C;
 }
 
-.form-wrap{
+.form-wrap {
   margin: 5px 0;
 }
 
-.login-link, .login-link:hover, .login-link:active{
+.login-link, .login-link:hover, .login-link:active {
   color: #666;
 }
 
@@ -140,4 +149,9 @@ a.active {
 
 .article-wrapper:nth-child(1){
   padding-top: 0;
+}
+
+.archive-time{
+  color: #a9a9a9;
+  font-size: 11px;
 }

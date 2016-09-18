@@ -3,7 +3,7 @@
     <div ng-repeat="article in articles" class="article-wrapper">
       <h3 class="blog-head">{{ article.title }}</h3>
       <div class="article-wrap">
-        <span class="article-tags">by <span class="underline">Stephen</span> on {{ article.created_at }} in <span class="tag">Larvel</span> <span class="tag">PHP</span> <span class="tag">Homestead</span> </span>
+        <span class="article-tags">by <span>Stephen</span> on {{ article.created_at }}  <span class="tag" ng-show="{{article.tags}}" ng-repeat="tag in article.tags"> <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> {{tag}} </span> </span>
         <p class="article-descrip" markdown-to-html="article.body">
         </p>
       </div>
