@@ -50,6 +50,25 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
           }
         }]
       })
+      .state('edit', {
+        url: '/dashboard/{id}/edit',
+        controller: 'editCtrl',
+        templateUrl: '/templates/edit.hbs',
+        data: {
+          pageTitle: 'Edit | Stephen Knutter',
+          navSelect: false
+        },
+        resolve: {
+          post: ['$stateParams', 'article', function($stateParams, article) {
+            return article.setArticleId($stateParams.id);
+          }]
+        },
+        onEnter: ['$state', 'auth', function($state, auth) {
+          if (!auth.isLoggedIn()) {
+            $state.go('home');
+          }
+        }]
+      })
       .state('archive', {
         url: '/archive',
         controller: 'blogCtrl',
@@ -60,7 +79,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
         }
       });
 
-    $urlRouterProvider.otherwise('home');
+    $urlRouterProvider.otherwise('/');
 
     $locationProvider.html5Mode({
       enabled: true,
@@ -85,16 +104,16 @@ app.controller('blogCtrl', ['$scope', '$http', 'article', 'auth',
 
     $scope.isLoggedIn = auth.isLoggedIn;
 
-    $scope.removeArticle = function(id) {
+    $scope.removeArticle = function(id, i) {
       if (confirm('Are you sure?')) {
-        //DELETE COMMENT HERE
+        id = parseInt(id);
+        article.removeArticle(id, function(deleted) {
+          if (deleted) $scope.articles.splice(i, 1);
+          return false;
+        });
       }
     };
   }]);
-
-app.controller('archiveCtrl', ['$scope', function($scope) {
-  $scope.msg = 'HI';
-}]);
 
 app.controller('logCtrl', ['$scope', '$state', 'auth',
   function($scope, $state, auth) {
@@ -108,6 +127,50 @@ app.controller('logCtrl', ['$scope', '$state', 'auth',
       });
     };
   }]);
+
+app.controller('editCtrl', ['$scope', 'article', function($scope, article) {
+  $scope.itemArray = [];
+  $scope.article = {};
+  $scope.msg = false;
+
+  article.findArticleById(article.articleId, function(data) {
+    var dataRows = data.rows[0];
+    $scope.article.id = dataRows.id;
+    $scope.article.title = dataRows.title;
+    $scope.article.body = dataRows.body;
+
+    article.getArticleTagsList(function(data) {
+      var selected = [];
+      for (var i = 0; i < dataRows.tags.length; i++) {
+        var tagId = dataRows.tags[i].f1;
+        var tag = dataRows.tags[i].f2;
+        if (tag) {
+          selected.push({id: tagId, tag: tag});
+        }
+      }
+      $scope.article.selected = selected;
+      $scope.itemArray = data;
+    });
+  });
+
+  $scope.editArticle = function(articleId) {
+    if (!$scope.article.title || !$scope.article.body) return false;
+
+    var articleAttributes = {
+      title: $scope.article.title,
+      body: $scope.article.body,
+      tags: $scope.article.selected
+    };
+
+    article.updateArticle(articleId, articleAttributes, function(msg) {
+      if (msg) {
+        $scope.msg = true;
+      } else {
+        $scope.msg = true;
+      }
+    });
+  };
+}]);
 
 app.controller('articleCtrl', ['$scope', '$state', 'article',
   function($scope, $state, article) {
@@ -131,10 +194,22 @@ app.controller('articleCtrl', ['$scope', '$state', 'article',
 
 app.factory('article', ['$http', '$state', 'auth',
   function($http, $state, auth) {
-    var article = {};
+    var article = {
+      articleId: null
+    };
 
     article.getAllArticles = function(cb) {
       $http.get('/articles').success(function(data) {
+        cb(data);
+      });
+    };
+
+    article.setArticleId = function(id) {
+      article.articleId = id;
+    };
+
+    article.findArticleById = function(articleId, cb) {
+      $http.get('/articles/' + articleId).success(function(data) {
         cb(data);
       });
     };
@@ -150,6 +225,24 @@ app.factory('article', ['$http', '$state', 'auth',
     article.getArticleTagsList = function(cb) {
       $http.get('/articles/tags').success(function(data) {
         cb(data);
+      });
+    };
+
+    article.removeArticle = function(articleId, cb) {
+      $http.delete('/articles/' + articleId, {
+        headers: {Authorization: 'Bearer ' + auth.getToken()}
+      }).success(function(data) {
+        cb(true);
+      });
+    };
+
+    article.updateArticle = function(articleId, article, cb) {
+      $http.put('/articles/' + articleId + '/edit', article, {
+        headers: {Authorization: 'Bearer ' + auth.getToken()}
+      }).success(function(data) {
+        cb(true);
+      }).error(function() {
+        cb(false);
       });
     };
 

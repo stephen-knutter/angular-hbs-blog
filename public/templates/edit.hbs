@@ -1,5 +1,6 @@
 <h3>Your Dashboard</h3>
-<form id="addArticle" ng-submit="addArticle()">
+<div ng-show="msg" class="alert alert-success" role="alert"><strong>Success!</strong> Article was successfully updated.</div>
+<form id="addArticle" ng-submit="editArticle(article.id)">
   <div class="well">
     <div class="form-group">
       <input type="text" class="form-control" name="title" placeholder="Add title..." ng-model="article.title" />
@@ -8,7 +9,7 @@
       <textarea class="form-control" name="name" rows="8" cols="40" placeholder="Add markup..." ng-model="article.body"></textarea>
     </div>
     <div class="form-group">
-      <ui-select multiple ng-model="article.tags">
+      <ui-select multiple ng-model="article.selected">
         <ui-select-match placeholder="Select tags...">
             <span ng-bind="$item.tag"></span>
         </ui-select-match>

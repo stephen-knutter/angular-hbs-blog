@@ -2,7 +2,7 @@
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
   return knex('tags').del()
-    .then(function () {
+    .then(function() {
       return Promise.all([
         // Inserts seed entries
         knex('tags').insert({tag: 'PHP'}),

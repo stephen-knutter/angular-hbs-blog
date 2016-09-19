@@ -34,3 +34,6 @@ npm-debug.log
 
 # Linter
 .eslintrc.json
+
+# Bower
+bower_components

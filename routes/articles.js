@@ -3,11 +3,28 @@ var router = express.Router();
 var query = require('../database/query');
 var expressJWT = require('express-jwt');
 
-var auth = expressJWT({secret: process.env.SECRET, requestProperty: 'payload'});
+var auth = expressJWT({secret: process.env.SECRET, userProperty: 'payload'});
 
 /* GET all Articles. */
 router.get('/', function(req, res, next) {
   query.getArticlesWithTags().then(function(data) {
+    res.json(data);
+  });
+});
+
+router.post('/', auth, function(req, res, next) {
+  var article = req.body;
+
+  query.addArticle(article).then(function(data) {
+    res.json(data);
+  });
+});
+
+router.put('/:id/edit', auth, function(req, res, next) {
+  var article = req.body;
+  var articleId = req.params.id;
+
+  query.updateArticle(articleId, article).then(function(data) {
     res.json(data);
   });
 });
@@ -18,10 +35,18 @@ router.get('/tags', function(req, res, next) {
   });
 });
 
-router.post('/', auth, function(req, res, next) {
-  var article = req.body;
+router.get('/:id', function(req, res, next) {
+  var articleId = req.params.id;
 
-  query.addArticle(article).then(function(data) {
+  query.getArticleById(articleId).then(function(data) {
+    res.json(data);
+  });
+});
+
+router.delete('/:id', auth, function(req, res, next) {
+  var articleId = req.params.id;
+
+  query.deleteArticle(articleId).then(function(data) {
     res.json(data);
   });
 });
