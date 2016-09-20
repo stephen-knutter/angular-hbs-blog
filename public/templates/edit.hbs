@@ -1,5 +1,6 @@
 <h3>Your Dashboard</h3>
-<div ng-show="msg" class="alert alert-success" role="alert"><strong>Success!</strong> Article was successfully updated.</div>
+<div ng-show="successMsg" class="alert alert-success" role="alert"><strong>Success!</strong> Article was successfully updated.</div>
+<div ng-show="failureMsg" class="alert alert-danger" role="alert"><strong>Error!</strong> Article could not be update.</div>
 <form id="addArticle" ng-submit="editArticle(article.id)">
   <div class="well">
     <div class="form-group">

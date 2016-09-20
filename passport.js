@@ -9,19 +9,19 @@ passport.use(new Strategy(function(username, password, done) {
 
     var check = query.authenticateUser(password, user.password);
     if (!check) return done(null, false);
-    done(null, JSON.stringify(user));
+    done(null, user);
   });
 }));
 
 passport.serializeUser(function(user, done) {
-  done(null, JSON.parse(user.username));
+  done(null, user.username);
 });
 
 passport.deserializeUser(function(username, done) {
   query.findByUsername(username).then(function(user) {
     user = user[0];
     if (!user) return false;
-    done(null, JSON.stringify(user));
+    done(null, user);
   });
 });
 

@@ -118,6 +118,7 @@ app.controller('blogCtrl', ['$scope', '$http', 'article', 'auth',
 app.controller('logCtrl', ['$scope', '$state', 'auth',
   function($scope, $state, auth) {
     $scope.user = {};
+    $scope.error = false;
 
     $scope.logIn = function() {
       auth.logIn($scope.user).error(function(error) {
@@ -131,7 +132,8 @@ app.controller('logCtrl', ['$scope', '$state', 'auth',
 app.controller('editCtrl', ['$scope', 'article', function($scope, article) {
   $scope.itemArray = [];
   $scope.article = {};
-  $scope.msg = false;
+  $scope.successMsg = false;
+  $scope.failureMsg = false;
 
   article.findArticleById(article.articleId, function(data) {
     var dataRows = data.rows[0];
@@ -144,7 +146,7 @@ app.controller('editCtrl', ['$scope', 'article', function($scope, article) {
       for (var i = 0; i < dataRows.tags.length; i++) {
         var tagId = dataRows.tags[i].f1;
         var tag = dataRows.tags[i].f2;
-        if (tag) {
+        if (tagId && tag) {
           selected.push({id: tagId, tag: tag});
         }
       }
@@ -156,17 +158,19 @@ app.controller('editCtrl', ['$scope', 'article', function($scope, article) {
   $scope.editArticle = function(articleId) {
     if (!$scope.article.title || !$scope.article.body) return false;
 
+    $scope.successMsg = $scope.failureMsg = false;
+
     var articleAttributes = {
       title: $scope.article.title,
       body: $scope.article.body,
       tags: $scope.article.selected
     };
 
-    article.updateArticle(articleId, articleAttributes, function(msg) {
-      if (msg) {
-        $scope.msg = true;
+    article.updateArticle(articleId, articleAttributes, function(success) {
+      if (success) {
+        $scope.successMsg = true;
       } else {
-        $scope.msg = true;
+        $scope.failureMsg = true;
       }
     });
   };

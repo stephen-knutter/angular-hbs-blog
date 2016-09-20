@@ -27,7 +27,8 @@ router.post('/login', function(req, res, next) {
 
       return res.json({token: token});
     }
-    return res.status(401).json(info);
+    return res.status(401)
+      .json({message: 'User does not exist'});
   })(req, res, next);
 });
 

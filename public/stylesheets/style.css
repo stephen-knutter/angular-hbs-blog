@@ -29,8 +29,8 @@ a.active {
   padding: 3px;
 }
 
-.underline{
-  text-decoration: underline;
+.alert-danger{
+  margin-top: 5px;
 }
 
 .content-wrapper {
