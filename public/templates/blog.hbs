@@ -3,7 +3,7 @@
     <div ng-repeat="article in articles" class="article-wrapper">
       <h3 class="blog-head">{{ article.title }}</h3>
       <div class="article-wrap">
-        <span class="article-tags">by <span>Stephen</span> on {{ article.created_at }}  <span class="tag" ng-show="{{article.tags}}" ng-repeat="tag in article.tags"> <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> {{tag}} </span> </span>
+        <span class="article-tags">by <span>Stephen</span> on {{ formatTime(article.created_at) }}  <span class="tag" ng-show="{{article.tags}}" ng-repeat="tag in article.tags"> <span class="glyphicon glyphicon-tag" aria-hidden="true"></span> {{tag}} </span> </span>
         <p class="article-descrip" markdown-to-html="article.body">
         </p>
       </div>
@@ -11,7 +11,34 @@
   </div>
 
   <div class="col-md-3 col-md-offset-1">
-    <h3 class="side-head">About</h3>
-    <p class="side-descrip">I am a JavaScript Engineer from Denver, CO</p>
+    <div class="side-wrap info-wrap">
+      <h3 class="side-head">About</h3>
+      <p class="side-descrip">
+        Software Engineer focusing on web technologies.
+        Highly involved with JavaScript and its many libraries
+        including AngualarJS, ReactJS, Node.js, and Express.js.
+        Others include Bootstrap, PHP and the Laravel framework.
+        I take a Mobile First approach to every project and utilize
+        Test Driven Development to ensure quality deployment.
+      </p>
+    </div>
+
+    <div class="side-wrap map-wrap">
+      <div class="map" id="map">
+      </div>
+    </div>
+
+    <div class="side-wrap link-wrap">
+      <h3 class="side-head">Links</h3>
+      <ul class="link-list">
+        <li><a href="#">Laravel</a></li>
+        <li><a href="#">PostgreSQL </a></li>
+        <li><a href="#">MongoDB</a></li>
+        <li><a href="#">Node.js</a></li>
+        <li><a href="#">Express.js</a></li>
+        <li><a href="#">AngularJS</a></li>
+        <li><a href="#">ReactJS</a></li>
+      </ul>
+    </div>
   </div>
 </div>

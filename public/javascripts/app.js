@@ -2,7 +2,8 @@ var app = angular.module('blog',
   ['ng-showdown',
   'ui.router',
   'ui.select',
-  'ngSanitize']);
+  'ngSanitize',
+  'map']);
 
 app.run(['$rootScope', '$state', '$stateParams',
   function($rootScope, $state, $stateParams) {
@@ -92,10 +93,12 @@ app.controller('footCtrl', ['$scope', 'auth', function($scope, auth) {
   $scope.logOut = auth.logOut;
 }]);
 
-app.controller('blogCtrl', ['$scope', '$http', 'article', 'auth',
-  function($scope, $http, article, auth) {
+app.controller('blogCtrl', ['$scope', '$http', 'article', 'auth', 'map',
+  function($scope, $http, article, auth, map) {
     article.getAllArticles(function(data) {
       $scope.articles = data.rows;
+
+      map.generateMap(39.742043, -104.991531);
     });
 
     $scope.formatTime = function(time) {
