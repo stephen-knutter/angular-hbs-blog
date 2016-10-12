@@ -19,7 +19,9 @@ var query = {
   },
   getArticlesWithTags: function() {
     return knex.raw(
-        'SELECT articles.*, array_agg(tags.tag ORDER BY tags.tag) AS tags ' +
+        'SELECT articles.*, ' +
+        'array_to_json(array_agg(ROW(tags.id, tags.tag) ' +
+        'ORDER BY tags.tag)) AS tags ' +
         'FROM articles ' +
         'LEFT JOIN article_tag ON articles.id = article_tag.article_id ' +
         'LEFT JOIN tags ON article_tag.tag_id = tags.id ' +

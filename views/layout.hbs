@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="blog">
   <head>
+    <link rel="icon" href="/images/slime-icon.jpg" />
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/bower_components/angular-ui-select/dist/select.min.css" />
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css" />
@@ -29,13 +30,11 @@
     <![endif]-->
   </head>
   <body>
-    <div class="container">
       <ng-include src="'/templates/header.hbs'"></ng-include>
-
-      <!-- {{{body}}} -->
-      <ui-view></ui-view>
-
-      <ng-include src="'/templates/footer.hbs'"></ng-include>
-    </div>
+      <div class="container">
+        <!-- {{{body}}} -->
+        <ui-view></ui-view>
+        <ng-include src="'/templates/footer.hbs'"></ng-include>
+      </div>
   </body>
 </html>

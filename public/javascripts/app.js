@@ -17,18 +17,18 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
       .state('home', {
         url: '/',
         controller: 'blogCtrl',
-        templateUrl: './templates/blog.hbs',
+        templateUrl: '/templates/blog.hbs',
         data: {
-          pageTitle: 'Stephe Knutter',
+          pageTitle: 'Gooey Tuts',
           navSelect: 'home'
         }
       })
       .state('login', {
         url: '/login',
         controller: 'logCtrl',
-        templateUrl: './templates/login.hbs',
+        templateUrl: '/templates/login.hbs',
         data: {
-          pageTitle: 'Login | Stephe Knutter',
+          pageTitle: 'Login | Gooey Tuts',
           navSelect: false
         },
         onEnter: ['$state', 'auth', function($state, auth) {
@@ -40,9 +40,9 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
       .state('dashboard', {
         url: '/dashboard',
         controller: 'articleCtrl',
-        templateUrl: './templates/dashboard.hbs',
+        templateUrl: '/templates/dashboard.hbs',
         data: {
-          pageTitle: 'Dashboard | Stephen Knutter',
+          pageTitle: 'Dashboard | Gooey Tuts',
           navSelect: false
         },
         onEnter: ['$state', 'auth', function($state, auth) {
@@ -56,7 +56,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
         controller: 'editCtrl',
         templateUrl: '/templates/edit.hbs',
         data: {
-          pageTitle: 'Edit | Stephen Knutter',
+          pageTitle: 'Edit | Gooey Tuts',
           navSelect: false
         },
         resolve: {
@@ -70,12 +70,25 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
           }
         }]
       })
+      .state('articles', {
+        url: '/article/{id}',
+        controller: 'articlesCtrl',
+        templateUrl: '/templates/blog.hbs',
+        data: {
+          pageTitle: 'Gooey Tuts'
+        },
+        resolve: {
+          post: ['$stateParams', 'article', function($stateParams, article) {
+            return article.setArticleId($stateParams.id);
+          }]
+        }
+      })
       .state('archive', {
         url: '/archive',
         controller: 'blogCtrl',
-        templateUrl: './templates/archive.hbs',
+        templateUrl: '/templates/archive.hbs',
         data: {
-          pageTitle: 'Archive | Stephen Knutter',
+          pageTitle: 'Archive | Gooey Tuts',
           navSelect: 'archive'
         }
       });
@@ -178,6 +191,15 @@ app.controller('editCtrl', ['$scope', 'article', function($scope, article) {
     });
   };
 }]);
+
+app.controller('articlesCtrl', ['$scope', 'article', 'map',
+  function($scope, article, map) {
+    article.findArticleById(article.articleId, function(data) {
+      $scope.articles = data.rows;
+
+      map.generateMap(39.742043, -104.991531);
+    });
+  }]);
 
 app.controller('articleCtrl', ['$scope', '$state', 'article',
   function($scope, $state, article) {
