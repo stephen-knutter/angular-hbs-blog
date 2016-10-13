@@ -85,7 +85,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
       })
       .state('archive', {
         url: '/archive',
-        controller: 'blogCtrl',
+        controller: 'archiveCtrl',
         templateUrl: '/templates/archive.hbs',
         data: {
           pageTitle: 'Archive | Gooey Tuts',
@@ -105,6 +105,19 @@ app.controller('footCtrl', ['$scope', 'auth', function($scope, auth) {
   $scope.isLoggedIn = auth.isLoggedIn;
   $scope.logOut = auth.logOut;
 }]);
+
+app.controller('archiveCtrl', ['$scope', '$http', 'article', 'auth', 'map',
+  function($scope, $http, article, auth, map) {
+    article.getAllArticles(function(data) {
+      $scope.articles = data.rows;
+    });
+
+    $scope.formatTime = function(time) {
+      return new Date(time).toDateString();
+    };
+
+    $scope.isLoggedIn = auth.isLoggedIn;
+  }]);
 
 app.controller('blogCtrl', ['$scope', '$http', 'article', 'auth', 'map',
   function($scope, $http, article, auth, map) {
